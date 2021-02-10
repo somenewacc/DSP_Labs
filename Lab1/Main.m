@@ -73,8 +73,6 @@ x = 0:1:length(M1) - 1;
 plot(x, M1)
 title('M1')
 
-disp('lol')
-
 % M2
 clear x
 subplot(3, 1, 2)
