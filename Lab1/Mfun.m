@@ -1,6 +1,6 @@
 % Fun for M sequence %
 
-function Ms = Mfun(A,C)
+function [ Ms ] = Mfun( A,C )
 
 atmp = A;
 ctmp = C;
@@ -34,3 +34,5 @@ for j = 1:1:Mlength
 end
 
 Ms = Mtmp;
+
+end
