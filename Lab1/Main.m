@@ -89,3 +89,16 @@ title('Msum')
 
 clear x
 disp('Plots created!')
+
+%% my_sf %%
+% AKF = M1, M1
+AKF = my_sf(M1, M1);
+
+% VKF = M2, M1
+VKF = my_sf(M2, M1);
+
+% MsumFiltered1 = Msum, M1
+MsumFiltered1 = my_sf(Msum, M1)
+
+% MsumFiltered2 = Msum, M2
+MsumFiltered2 = my_sf(Msum, M2)
