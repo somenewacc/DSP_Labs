@@ -16,11 +16,11 @@ A  = [1 0 0 0 0 0 0 0 1 0];
 C1 = [0 0 0 0 1 0 0 1 1 1];
 C2 = [0 0 0 0 1 0 1 1 0 1];
 
-disp(sprintf('*********DSP Lab Work %g*********', Work))
-disp(sprintf('********Work variant = %g********', Var))
+fprintf('*********DSP Lab Work %g*********\n', Work)
+fprintf('********Work variant = %g********\n', Var)
 
 %% 1st %%
-fprintf('\n1st and 2nd tasks:\n')
+fprintf('1st and 2nd tasks:\n')
 disp('------------------')
 M1 = Mfun(A, C1);
 M2 = Mfun(A, C2);
@@ -41,7 +41,7 @@ end
 fprintf('\n3rd task:\n')
 disp('---------')
 shift = 100 + Var * 10;
-disp(sprintf('Shift = %g', shift))
+fprintf('Shift = %g\n', shift)
 
 M1_shifted = [M1, zeros(1, shift)];
 M2_shifted = [zeros(1, shift), -M2];
@@ -119,10 +119,10 @@ if debug_info == true
     disp('MsumFiltered2 = ')
     disp(MsumFiltered2)
 else
-    disp(sprintf('AKF - Done! Max position = %g', find(AKF == max(AKF))))
+    fprintf('AKF - Done! Max position = %g\n', find(AKF == max(AKF)))
     disp('VKF - Done!')
-    disp(sprintf('MsumFiltered1 - Done! Max position = %g', find(MsumFiltered1 == max(MsumFiltered1))))
-    disp(sprintf('MsumFiltered2 - Done! Min position = %g', find(MsumFiltered2 == min(MsumFiltered2))))
+    fprintf('MsumFiltered1 - Done! Max position = %g', find(MsumFiltered1 == max(MsumFiltered1)))
+    fprintf('\nMsumFiltered2 - Done! Min position = %g\n', find(MsumFiltered2 == min(MsumFiltered2)))
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -140,10 +140,10 @@ MsumFiltered1xcorr = xcorr(Msum, M1);
 % MsumFiltered2 = Msum, M2
 MsumFiltered2xcorr = xcorr(Msum, M2);
 
-disp(sprintf('AKFxcorr - Done! Max position = %g', find(AKFxcorr == max(AKFxcorr))))
+fprintf('AKFxcorr - Done! Max position = %g\n', find(AKFxcorr == max(AKFxcorr)))
 disp('VKFxcorr - Done!')
-disp(sprintf('MsumFiltered1xcorr - Done! Max position = %g', find(MsumFiltered1xcorr == max(MsumFiltered1xcorr))))
-disp(sprintf('MsumFiltered2xcorr - Done! Min position = %g', find(MsumFiltered2xcorr == min(MsumFiltered2xcorr))))
+fprintf('MsumFiltered1xcorr - Done! Max position = %g', find(MsumFiltered1xcorr == max(MsumFiltered1xcorr)))
+fprintf('\nMsumFiltered2xcorr - Done! Min position = %g\n', find(MsumFiltered2xcorr == min(MsumFiltered2xcorr)))
 
 %% Plots creating %%
 fprintf('\nCreating plots...\n')
