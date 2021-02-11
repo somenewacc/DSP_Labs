@@ -30,4 +30,3 @@ function [ Mf ] = my_sf( A, B )
     Mf = Mftmp;
 
 end
-

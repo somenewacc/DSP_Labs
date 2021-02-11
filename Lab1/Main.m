@@ -202,7 +202,7 @@ clear x
 subplot(4, 2, 7)
 x = 0:1:length(MsumFiltered2) - 1;
 plot(x, MsumFiltered2)
-title('my_sf(Msum, M2)','Interpreter','none')
+title('my_sf(Msum, M2)', 'Interpreter' ,'none')
 
 % MsumFiltered2xcorr
 clear x

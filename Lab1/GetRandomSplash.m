@@ -50,4 +50,3 @@ function [ splash ] = GetRandomSplash()
     end
     splash = splashtmp;
 end
-
