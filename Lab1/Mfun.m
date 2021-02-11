@@ -31,7 +31,7 @@ function [ Ms ] = Mfun( A, C )
             xorresult = xor( xorresult, Phtmp(i) );
         end
         % 0 = 1, 1 = -1
-        if ( xorresult == 0 ); Mtmp(j) = 1; else; Mtmp(j) = -1; end
+        if ( xorresult == 0 ); Mtmp(j) = 1; else Mtmp(j) = -1; end
         
         % concat xorresult + A >> 1
         atmp = circshift( atmp, [0 1] );

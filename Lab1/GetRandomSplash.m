@@ -35,18 +35,32 @@ function [ splash ] = GetRandomSplash()
                 'Pixels!             '
                 '12 herbs and spices!'
                 'Fat free!           '
-                '9|cHo               '
+                'More than 500 sold! '
+                'Never dig down!     '
+                'More polygons!      '
+                'Now with difficulty!'
+                'OpenGL 2.1!         '
+                'Something funny!    '
+                'Sublime!            '
+                'Stay safe!          '
+                'Tip your waiter!    '
+                'Twittered about!    '
+                'Very fun!           '
+                'Water proof!        '
+                'Rainbow turtle?     '
+                'Punching wood!      '
+                'Pretty scary!       '
                 ];
 
     splashessize = size(splashes);
     linelength   = splashessize(2);
     splashessize = splashessize(1);
     
-    splashtmp = char(' ' * linelength);
+    splashtmp = char( ' ' * linelength );
     
     choice = randi(splashessize);
     for i = 1:1:linelength
-        splashtmp(i) = splashes(choice, i);
+        splashtmp(i) = splashes( choice, i );
     end
     splash = splashtmp;
 end
