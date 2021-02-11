@@ -2,10 +2,16 @@
 
 function [ Ms ] = Mfun( A, C )
 
+    % Just for fun, don't think it's necessary here
+    if length(A) ~= length(C)
+        exception = MException('Mfun:lengthError', 'Lengths must be equal!');
+        throw(exception)
+    end
+
     atmp = A;
     ctmp = C;
 
-    % M = 2^m - 1
+    % N = 2^m - 1
     Alength = length( atmp );
     Mlength = 2 .^ Alength - 1;
 
