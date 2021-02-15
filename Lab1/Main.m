@@ -2,6 +2,10 @@
 % A  = 1000000010 %
 % C1 = 0000100111 %
 % C2 = 0000101101 %
+% TODO:           %
+% my_sf is bad    %
+% doesn't work    %
+% need to rewrite %
 
 %% Globals %%
 close all
@@ -140,10 +144,23 @@ MsumFiltered1xcorr = xcorr(Msum, M1);
 % MsumFiltered2 = Msum, M2
 MsumFiltered2xcorr = xcorr(Msum, M2);
 
-fprintf('AKFxcorr - Done! Max position = %g\n', find(AKFxcorr == max(AKFxcorr)))
-disp('VKFxcorr - Done!')
-fprintf('MsumFiltered1xcorr - Done! Max position = %g', find(MsumFiltered1xcorr == max(MsumFiltered1xcorr)))
-fprintf('\nMsumFiltered2xcorr - Done! Min position = %g\n', find(MsumFiltered2xcorr == min(MsumFiltered2xcorr)))
+%               Debug             %
+if debug_info == true
+    disp('AKFxcorr = ')
+    disp(AKFxcorr)
+    disp('VKFxcorr = ')
+    disp(VKFxcorr)
+    disp('MsumFiltered1xcorr = ')
+    disp(MsumFiltered1xcorr)
+    disp('MsumFiltered2xcorr = ')
+    disp(MsumFiltered2xcorr)
+else
+    fprintf('AKFxcorr - Done! Max position = %g\n', find(AKFxcorr == max(AKFxcorr)))
+    disp('VKFxcorr - Done!')
+    fprintf('MsumFiltered1xcorr - Done! Max position = %g', find(MsumFiltered1xcorr == max(MsumFiltered1xcorr)))
+    fprintf('\nMsumFiltered2xcorr - Done! Min position = %g\n', find(MsumFiltered2xcorr == min(MsumFiltered2xcorr)))
+end
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Plots creating %%
 fprintf('\nCreating plots...\n')

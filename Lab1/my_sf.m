@@ -1,3 +1,5 @@
+% Absolute bs, doesn't work at all...
+
 function [ Mf ] = my_sf( A, B )
 
     atmp = A;
