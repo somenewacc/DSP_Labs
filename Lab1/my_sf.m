@@ -1,4 +1,4 @@
-% Absolute bs, doesn't work at all...
+% Not very efficient way to implement this, but it works :)
 
 function [ Mf ] = my_sf( A, B )
 
@@ -9,26 +9,23 @@ function [ Mf ] = my_sf( A, B )
     Blength = length( btmp );
 
     % Flip A array horizontally
-    atmp  = fliplr( atmp );
+    atmp = fliplr( atmp );
+    btmp = fliplr( btmp );
 
     % Nn = 2 * N - 1
-    Mflength = 2 .* Alength - 1;
+    Mflength = Alength + Blength + 1;
     
     % Declaration temp vars
-    aoper = zeros( 1, Alength );
+    aoper = zeros( 1, Blength );
     Mftmp = zeros( 1, Mflength );
 
-    for j = 1:1:Mflength
-        for i = Alength:-1:2
-            aoper(i) = aoper(i - 1);
-            if j > Blength
-                aoper(1) = 0;
-            else
-                aoper(1) = btmp(j);
-            end
-        end
-        Mftmp(j) = sum( atmp .* aoper );
+    Mftmp(1) = sum( btmp .* aoper );
+    for j = 2:1:Mflength
+        aoper = circshift( aoper, [0 1] );
+        atmp  = circshift( atmp, [0 1] );
+        aoper(1) = atmp(1);
+        atmp(1) = 0;
+        Mftmp(j) = sum( btmp .* aoper );
     end
     Mf = Mftmp;
-
 end
