@@ -1,5 +1,12 @@
-function [ splash ] = GetRandomSplash()
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     This ver of MatLab (7.11.0)      %
+%    doesn't support string arrays.    %
+%  I have to create N*M matrix of ch.  %
+%    Every column - single splash.     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+function [ splash ] = GetRandomSplash()
+    % Hack: align lines with spaces.
     splashes = ['Dont look at me     '
                 'Macroscopic!        '
                 'Ultimate edition!   '
@@ -52,13 +59,13 @@ function [ splash ] = GetRandomSplash()
                 'Pretty scary!       '
                 ];
 
-    splashessize = size(splashes);
-    linelength   = splashessize(2);
-    splashessize = splashessize(1);
+    splashessize = size( splashes );
+    linelength   = splashessize( 2 );
+    splashessize = splashessize( 1 );
     
     splashtmp = char( ' ' * linelength );
     
-    choice = randi(splashessize);
+    choice = randi( splashessize );
     for i = 1:1:linelength
         splashtmp(i) = splashes( choice, i );
     end

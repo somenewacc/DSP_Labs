@@ -1,11 +1,9 @@
+%%%%%%%%%%%%%%%%%%%
 % Var 2           %
 % A  = 1000000010 %
 % C1 = 0000100111 %
 % C2 = 0000101101 %
-% TODO:           %
-% my_sf is bad    %
-% doesn't work    %
-% need to rewrite %
+%%%%%%%%%%%%%%%%%%%
 
 %% Globals %%
 close all

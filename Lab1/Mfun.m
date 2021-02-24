@@ -40,5 +40,4 @@ function [ Ms ] = Mfun( A, C )
     end
 
     Ms = Mtmp;
-
 end
