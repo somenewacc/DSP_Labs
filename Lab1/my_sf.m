@@ -1,4 +1,8 @@
-% Not very efficient way to implement this, but it works :)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%       Implementation of matched filter      %
+%  Not very efficient way to implement this,  %
+%               but it works :)               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [ Mf ] = my_sf( A, B )
 

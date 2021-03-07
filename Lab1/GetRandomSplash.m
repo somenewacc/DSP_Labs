@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%     This ver of MatLab (7.11.0)      %
+%     This ver of MATLAB (7.11.0)      %
 %    doesn't support string arrays.    %
 %  I have to create N*M matrix of ch.  %
 %    Every column - single splash.     %
@@ -59,15 +59,15 @@ function [ splash ] = GetRandomSplash()
                 'Pretty scary!       '
                 ];
 
-    splashessize = size( splashes );
-    linelength   = splashessize( 2 );
-    splashessize = splashessize( 1 );
+    splashes_size = size( splashes );
+    line_length   = splashes_size( 2 );
+    splashes_size = splashes_size( 1 );
     
-    splashtmp = char( ' ' * linelength );
+    splash_tmp = repmat( ' ', 1, line_length );
     
-    choice = randi( splashessize );
-    for i = 1:1:linelength
-        splashtmp(i) = splashes( choice, i );
+    choice = randi( splashes_size );
+    for i = 1:1:line_length
+        splash_tmp(i) = splashes( choice, i );
     end
-    splash = splashtmp;
+    splash = splash_tmp;
 end

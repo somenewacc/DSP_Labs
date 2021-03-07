@@ -1,4 +1,6 @@
-% Fun for M sequence %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Function to generate M-function  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [ Ms ] = Mfun( A, C )
 

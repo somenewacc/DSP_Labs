@@ -5,6 +5,9 @@
 % C2 = 0000101101 %
 %%%%%%%%%%%%%%%%%%%
 
+% Maybe pretty much overloaded implementation of this laboratory work.
+% But why not?
+
 %% Globals %%
 close all
 clear
@@ -21,11 +24,10 @@ C2 = [0 0 0 0 1 0 1 1 0 1];
 fprintf('*********DSP Lab Work %g*********\n', Work)
 fprintf('********Work variant = %g********\n', Var)
 
-%% 1st %%
-fprintf('1st and 2nd tasks:\n')
-disp('------------------')
-M1 = Mfun(A, C1);
-M2 = Mfun(A, C2);
+%% Generate M1 and M2 %%
+DisplayHeader('Generate M1 and M2:')
+M1 = Mfun( A, C1 );
+M2 = Mfun( A, C2 );
 
 %            Debug         %
 if debug_info == true
@@ -40,8 +42,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Msum %%
-fprintf('\n3rd task:\n')
-disp('---------')
+DisplayHeader('Generate Msum:')
 shift = 100 + Var * 10;
 fprintf('Shift = %g\n', shift)
 
@@ -64,39 +65,20 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Plot creating %%
-fprintf('\nCreating plots...\n')
-disp('-----------------')
+DisplayHeader('Creating plots...')
 
 % Generating random window title
 splash = GetRandomSplash();
 figure('Name', splash, 'NumberTitle', 'off')
 
-% M1
-subplot(3, 1, 1)
-x = 0:1:length(M1) - 1;
-plot(x, M1)
-title('M1')
+CreateSimplePlot( true, 3, 1, 1, M1, 'M1' )
+CreateSimplePlot( true, 3, 1, 2, M2, 'M2' )
+CreateSimplePlot( true, 3, 1, 3, Msum, 'Msum' )
 
-% M2
-clear x
-subplot(3, 1, 2)
-x = 0:1:length(M2) - 1;
-plot(x, M2)
-title('M2')
-
-% Msum
-clear x
-subplot(3, 1, 3)
-x = 0:1:length(Msum) - 1;
-plot(x, Msum)
-title('Msum')
-
-clear x
 disp('Plots created!')
 
 %% my_sf %%
-fprintf('\nFiltering signals...\n')
-disp('-----------------')
+DisplayHeader('Filtering signals...')
 disp('- Filtering by own function:')
 % AKF = M1, M1
 AKF = my_sf(M1, M1);
@@ -161,70 +143,73 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Plots creating %%
-fprintf('\nCreating plots...\n')
-disp('-----------------')
+DisplayHeader('Creating plots...')
 
 % Generating random window title
 splash = GetRandomSplash();
 figure('Name', splash, 'NumberTitle', 'off')
 
-% TODO:
-% There must be an easier and prettier
-% way to implement multiple plot creating
+CreateSimplePlot( true, 4, 2, 1, AKF, 'my_sf(M1, M1)' )
+CreateSimplePlot( true, 4, 2, 2, AKFxcorr, 'xcorr(M1, M1)' )
+CreateSimplePlot( true, 4, 2, 3, VKF, 'my_sf(M2, M1)' )
+CreateSimplePlot( true, 4, 2, 4, VKFxcorr, 'xcorr(M2, M1)' )
+CreateSimplePlot( true, 4, 2, 5, MsumFiltered1, 'my_sf(Msum, M1)' )
+CreateSimplePlot( true, 4, 2, 6, MsumFiltered1xcorr, 'xcorr(Msum, M1)' )
+CreateSimplePlot( true, 4, 2, 7, MsumFiltered2, 'my_sf(Msum, M2)' )
+CreateSimplePlot( true, 4, 2, 8, MsumFiltered2xcorr, 'xcorr(Msum, M2)' )
 
-% AKF
-subplot(4, 2, 1)
-x = 0:1:length(AKF) - 1;
-plot(x, AKF)
-title('my_sf(M1, M1)', 'Interpreter', 'none')
+disp('Plots created!')
 
-% AKFxcorr
-subplot(4, 2, 2)
-x = 0:1:length(AKFxcorr) - 1;
-plot(x, AKFxcorr)
-title('xcorr(M1, M1)')
+%% Noise reduction %%
+DisplayHeader('Noise reduction:')
+disp('- Create noise:')
+noise = GetRandomNoise( 2, length(M1) );
 
-% VKF
-clear x
-subplot(4, 2, 3)
-x = 0:1:length(VKF) - 1;
-plot(x, VKF)
-title('my_sf(M2, M1)', 'Interpreter', 'none')
+%          Debug         %
+if debug_info == true
+    disp('noise =')
+    disp(noise)
+else
+    disp('Noise - Done!')
+end
+%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% VKFxcorr
-clear x
-subplot(4, 2, 4)
-x = 0:1:length(VKFxcorr) - 1;
-plot(x, VKFxcorr)
-title('xcorr(M2, M1)')
+disp('- Create M3 = M1 + noise:')
+M3 = M1 + noise;
 
-% MsumFiltered1
-clear x
-subplot(4, 2, 5)
-x = 0:1:length(MsumFiltered1) - 1;
-plot(x, MsumFiltered1)
-title('my_sf(Msum, M1)', 'Interpreter', 'none')
+%          Debug         %
+if debug_info == true
+    disp('M3 =')
+    disp(M3)
+else
+    disp('M3 - Done!')
+end
+%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% MsumFiltered1xcorr
-clear x
-subplot(4, 2, 6)
-x = 0:1:length(MsumFiltered1xcorr) - 1;
-plot(x, MsumFiltered1xcorr)
-title('xcorr(Msum, M1)')
+disp('- Filter M3:')
+M3_filtered = my_sf( M3, M1 );
 
-% MsumFiltered2
-clear x
-subplot(4, 2, 7)
-x = 0:1:length(MsumFiltered2) - 1;
-plot(x, MsumFiltered2)
-title('my_sf(Msum, M2)', 'Interpreter' ,'none')
+%            Debug            %
+if debug_info == true
+    disp('M3_filtered =')
+    disp(M3_filtered)
+else
+    disp('M3_filtered - Done!')
+end
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% MsumFiltered2xcorr
-clear x
-subplot(4, 2, 8)
-x = 0:1:length(MsumFiltered2xcorr) - 1;
-plot(x, MsumFiltered2xcorr)
-title('xcorr(Msum, M2)')
+disp('- Generating dB:')
+dB = 20 * log10( abs( M3_filtered ./ max( M3_filtered ) ) );
 
-clear x
+%% Plots creating %%
+DisplayHeader('Creating plots...')
+
+% Generating random window title
+splash = GetRandomSplash();
+figure('Name', splash, 'NumberTitle', 'off')
+
+CreateSimplePlot( true, 3, 1, 1, M3, 'M3' )
+CreateSimplePlot( true, 3, 1, 2, M3_filtered, 'my_sf(M3, M1)' )
+CreateSimplePlot( true, 3, 1, 3, dB, 'my_sf(M3, M1), dB' )
+
 disp('Plots created!')
