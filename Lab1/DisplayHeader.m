@@ -9,6 +9,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [] = DisplayHeader( header )
+
     header_length   = length( header );
     dash_line = repmat( '-', 1, header_length );
 
