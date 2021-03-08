@@ -35,7 +35,7 @@ function [ Mf ] = my_sf( A, B )
     % Shift signal into source %
     % Example (src = 011):     %
     %                          %
-    %    |sig|src| * |xor|     %
+    %    |sig|src| * |sum|     %
     % 0: |101|000|000| 0 |     %
     % 1: | 10|100|000| 0 |     %
     % 2: |  1|010|010| 1 |     %

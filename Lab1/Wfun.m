@@ -51,7 +51,6 @@ function [ W ] = Wfun( data, r )
         T_tmp = circshift( T_tmp, [0 1] );
 
         T_tmp(1) = xor_result;
-        W_tmp(i) = xor_result;
 
         if ( xor_result == 0 ); W_tmp(i) = 1; else W_tmp(i) = -1; end
     end

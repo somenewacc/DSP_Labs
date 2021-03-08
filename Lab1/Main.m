@@ -46,7 +46,7 @@ DisplayHeader('Generate M1 and M2:')
 M1 = Mfun( A, C1 );
 M2 = Mfun( A, C2 );
 
-%            Debug         %
+%        Debug       %
 if debug_info == true
     disp('M1 = ')
     disp(M1)
@@ -56,7 +56,7 @@ else
     disp('M1 - Done!')
     disp('M2 - Done!')
 end
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%
 
 %% Msum %%
 DisplayHeader('Generate Msum:')
@@ -68,7 +68,7 @@ M2_shifted = [ zeros( 1, shift ), -M2 ];
 
 Msum = M1_shifted + M2_shifted;
 
-%            Debug         %
+%         Debug        %
 if debug_info == true
     disp('M1_shifted = ')
     disp(M1_shifted)
@@ -79,7 +79,7 @@ if debug_info == true
 else
     disp('Msum - Done!')
 end
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Plot creating %%
 DisplayHeader('Creating plots...')
@@ -109,7 +109,7 @@ Msum_filtered1 = my_sf( Msum, M1 );
 % Msum_filtered2 = Msum, M2
 Msum_filtered2 = my_sf( Msum, M2 );
 
-%               Debug             %
+%                                  Debug                                %
 if debug_info == true
     disp('AKF = ')
     disp(AKF)
@@ -120,12 +120,15 @@ if debug_info == true
     disp('Msum_filtered2 = ')
     disp(Msum_filtered2)
 else
-    fprintf('AKF - Done! Max position = %g\n', find( AKF == max( AKF ) ))
+    AKF_index = find( AKF == max( AKF ) );
+    fprintf('AKF - Done! Max position = %g\n', AKF_index)
     disp('VKF - Done!')
-    fprintf('Msum_filtered1 - Done! Max position = %g', find( Msum_filtered1 == max( Msum_filtered1 ) ))
-    fprintf('\nMsumFiltered2 - Done! Min position = %g\n', find( Msum_filtered2 == min( Msum_filtered2 ) ))
+    Msum_f1_index = find( Msum_filtered1 == max( Msum_filtered1 ) );
+    Msum_f2_index = find( Msum_filtered2 == min( Msum_filtered2 ) );
+    fprintf('Msum_filtered1 - Done! Max position = %g', Msum_f1_index)
+    fprintf('\nMsumFiltered2 - Done! Min position = %g\n', Msum_f2_index)
 end
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 disp(' ')
 disp('- Filtering by built-in function:')
@@ -141,7 +144,7 @@ Msum_filtered1_xcorr = xcorr( Msum, M1 );
 % Msum_filtered2 = Msum, M2
 Msum_filtered2_xcorr = xcorr( Msum, M2 );
 
-%               Debug             %
+%                                    Debug                                   %
 if debug_info == true
     disp('AKF_xcorr = ')
     disp(AKF_xcorr)
@@ -152,12 +155,15 @@ if debug_info == true
     disp('Msum_filtered2_xcorr = ')
     disp(Msum_filtered2_xcorr)
 else
-    fprintf('AKF_xcorr - Done! Max position = %g\n', find( AKF_xcorr == max( AKF_xcorr ) ))
+    AKF_xcorr_index = find( AKF_xcorr == max( AKF_xcorr ) );
+    fprintf('AKF_xcorr - Done! Max position = %g\n', AKF_xcorr_index)
     disp('VKF_xcorr - Done!')
-    fprintf('Msum_filtered1_xcorr - Done! Max position = %g', find( Msum_filtered1_xcorr == max( Msum_filtered1_xcorr ) ))
-    fprintf('\nMsumFiltered2xcorr - Done! Min position = %g\n', find( Msum_filtered2_xcorr == min( Msum_filtered2_xcorr ) ))
+    Msum_f1_max = find( Msum_filtered1_xcorr == max( Msum_filtered1_xcorr ) );
+    Msum_f2_max = find( Msum_filtered2_xcorr == min( Msum_filtered2_xcorr ) );
+    fprintf('Msum_filtered1_xcorr - Done! Max position = %g', Msum_f1_max)
+    fprintf('\nMsumFiltered2xcorr - Done! Min position = %g\n', Msum_f2_max)
 end
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Plots creating %%
 DisplayHeader('Creating plots...')
@@ -182,27 +188,27 @@ DisplayHeader('Noise reduction:')
 disp('- Create noise:')
 noise = GetRandomNoise( 2, length(M1) );
 
-%          Debug         %
+%          Debug        %
 if debug_info == true
     disp('noise =')
     disp(noise)
 else
     disp('Noise - Done!')
 end
-%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
 
 disp(' ')
-disp('- Create M3 = M1 + noise:')
+disp('- Create M3:')
 M3 = M1 + noise;
 
-%          Debug         %
+%        Debug       %
 if debug_info == true
     disp('M3 =')
     disp(M3)
 else
     disp('M3 - Done!')
 end
-%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%
 
 disp(' ')
 disp('- Filter M3:')
@@ -254,6 +260,7 @@ DisplayHeader('Generate W1 and W2:')
 W1 = Wfun( data1, r );
 W2 = Wfun( data2, r );
 
+%        Debug       %
 if debug_info == true
     disp('W1 = ')
     disp(W1)
@@ -282,7 +289,7 @@ end
 %% Generate fast Walsh transform to Wsum: %%
 DisplayHeader('Generate fast Walsh transform to Wsum:')
 
-Bp = Bpfun(Wsum, r);
+Bp = Bpfun( Wsum, r );
 
 %        Debug       %
 if debug_info == true
@@ -296,7 +303,7 @@ end
 %% Proof that algorithm works just fine %%
 DisplayHeader('Proof that obtained Bp is correct.')
 
-[ decoded_array, indexes ] = ProofOfConcept(Bp, r);
+[ decoded_array, indexes ] = ProofOfConcept( Bp, r );
 
 disp('Origin/Decoded values:')
 disp([ data1 data2 ])
@@ -315,14 +322,14 @@ DisplayHeader('Noise reduction:')
 disp('- Create noise:')
 noise = GetRandomNoise( 2, length(Wsum) );
 
-%          Debug         %
+%         Debug         %
 if debug_info == true
     disp('noise =')
     disp(noise)
 else
     disp('Noise - Done!')
 end
-%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
 
 disp(' ')
 disp('- Create Wnoise:')
@@ -339,7 +346,7 @@ end
 
 disp(' ')
 disp('- Generate fast Walsh transform to Wnoise:')
-Bp_noise = Bpfun(Wnoise, r);
+Bp_noise = Bpfun( Wnoise, r );
 
 %           Debug          %
 if debug_info == true
@@ -353,7 +360,7 @@ end
 disp(' ')
 disp('- Proof that obtained Bp_noise is correct.')
 
-[ decoded_array, indexes ] = ProofOfConcept(Bp_noise, r);
+[ decoded_array, indexes ] = ProofOfConcept( Bp_noise, r );
 
 disp('Origin/Decoded values:')
 disp([ data1 data2 ])

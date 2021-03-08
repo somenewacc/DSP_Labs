@@ -1,6 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %  Implementation of fast Walsh transform  %
-%         Butterflies, butterflies         %
+%         Butterflies, butterflies...      %
 %                                          %
 %  Author: Bezborodov Grigoriy             %
 %  Github: somenewacc                      %
@@ -53,7 +53,7 @@ function [ Bp ] = Bpfun( w, r )
         % Latest layer is an answer
         Bp = next_layer;
         
-        % Jump to next sworm
+        % Jump to next layer
         current_layer = next_layer;
         next_layer = next_layer * 0;
         delta = delta / 2;
