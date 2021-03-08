@@ -2,6 +2,9 @@
 %       Implementation of matched filter      %
 %  Not very efficient way to implement this,  %
 %               but it works :)               %
+%                                             %
+%  Author: Bezborodov Grigoriy                %
+%  Github: somenewacc                         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [ Mf ] = my_sf( A, B )

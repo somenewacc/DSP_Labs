@@ -1,5 +1,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %  Function to generate M-function  %
+%                                   %
+%  Author: Bezborodov Grigoriy      %
+%  Github: somenewacc               %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [ Ms ] = Mfun( A, C )

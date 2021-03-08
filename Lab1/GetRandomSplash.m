@@ -1,8 +1,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     Function to get random string    %
+%           from char matrix           %
 %     This ver of MATLAB (7.11.0)      %
 %    doesn't support string arrays.    %
 %  I have to create N*M matrix of ch.  %
 %    Every column - single splash.     %
+%                                      %
+%  Author: Bezborodov Grigoriy         %
+%  Github: somenewacc                  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [ splash ] = GetRandomSplash()

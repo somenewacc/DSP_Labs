@@ -1,6 +1,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %  Implementation of Shiro's machine  %
 %   to generate Walsh-Hadamard code   %
+%                                     %
+%  Author: Bezborodov Grigoriy        %
+%  Github: somenewacc                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [ W ] = Wfun( data, r )

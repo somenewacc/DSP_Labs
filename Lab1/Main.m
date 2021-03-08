@@ -1,13 +1,18 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %         Variant 2         %
+%          Phase 1          %
 %      A  = 1000000010      %
 %      C1 = 0000100111      %
 %      C2 = 0000101101      %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%          Phase 2          %
 %   data1 = 2               %
 %   data2 = 149             %
 %       r = 10              %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Author: Bezborodov Grigoriy  %
+%  Github: somenewacc           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Maybe pretty much overloaded implementation of this laboratory work.
 % But why not?
@@ -21,12 +26,18 @@ debug_info = false;
 variant    = 2;
 work       = 1;
 
+%% Data for Phase 1 %%
 A  = [1 0 0 0 0 0 0 0 1 0];
 C1 = [0 0 0 0 1 0 0 1 1 1];
 C2 = [0 0 0 0 1 0 1 1 0 1];
 
+%% Data for Phase 2 %%
+data1 = 2;
+data2 = 149;
+r     = 10;
+
 fprintf('*********DSP Lab Work %g*********\n', work)
-fprintf('********work variant = %g********\n', variant)
+fprintf('********Work variant = %g********\n', variant)
 
 DisplayHeader('Phase 1: Synthesis and filtering of M-sequences')
 
@@ -75,7 +86,7 @@ DisplayHeader('Creating plots...')
 
 % Generating random window title
 splash = GetRandomSplash();
-figure('Name', splash, 'NumberTitle', 'off')
+figure( 'Name', splash, 'NumberTitle', 'off' )
 
 CreateSimplePlot( true, 3, 1, 1, M1, 'M1' )
 CreateSimplePlot( true, 3, 1, 2, M2, 'M2' )
@@ -87,16 +98,16 @@ disp('Plots created!')
 DisplayHeader('Filtering signals...')
 disp('- Filtering by own function:')
 % AKF = M1, M1
-AKF = my_sf(M1, M1);
+AKF = my_sf( M1, M1 );
 
 % VKF = M2, M1
-VKF = my_sf(M2, M1);
+VKF = my_sf( M2, M1 );
 
 % Msum_filtered1 = Msum, M1
-Msum_filtered1 = my_sf(Msum, M1);
+Msum_filtered1 = my_sf( Msum, M1 );
 
 % Msum_filtered2 = Msum, M2
-Msum_filtered2 = my_sf(Msum, M2);
+Msum_filtered2 = my_sf( Msum, M2 );
 
 %               Debug             %
 if debug_info == true
@@ -119,16 +130,16 @@ end
 disp(' ')
 disp('- Filtering by built-in function:')
 % AKF = M1, M1
-AKF_xcorr = xcorr(M1, M1);
+AKF_xcorr = xcorr( M1, M1 );
 
 % VKF = M2, M1
-VKF_xcorr = xcorr(M2, M1);
+VKF_xcorr = xcorr( M2, M1 );
 
 % Msum_filtered1 = Msum, M1
-Msum_filtered1_xcorr = xcorr(Msum, M1);
+Msum_filtered1_xcorr = xcorr( Msum, M1 );
 
 % Msum_filtered2 = Msum, M2
-Msum_filtered2_xcorr = xcorr(Msum, M2);
+Msum_filtered2_xcorr = xcorr( Msum, M2 );
 
 %               Debug             %
 if debug_info == true
@@ -153,7 +164,7 @@ DisplayHeader('Creating plots...')
 
 % Generating random window title
 splash = GetRandomSplash();
-figure('Name', splash, 'NumberTitle', 'off')
+figure( 'Name', splash, 'NumberTitle', 'off' )
 
 CreateSimplePlot( true, 4, 2, 1, AKF, 'my_sf(M1, M1)' )
 CreateSimplePlot( true, 4, 2, 2, AKF_xcorr, 'xcorr(M1, M1)' )
@@ -180,6 +191,7 @@ else
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
+disp(' ')
 disp('- Create M3 = M1 + noise:')
 M3 = M1 + noise;
 
@@ -192,6 +204,7 @@ else
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
+disp(' ')
 disp('- Filter M3:')
 M3_filtered = my_sf( M3, M1 );
 
@@ -204,8 +217,18 @@ else
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+disp(' ')
 disp('- Generating dB:')
 dB = 20 * log10( abs( M3_filtered ./ max( M3_filtered ) ) );
+
+%        Debug       %
+if debug_info == true
+    disp('dB =')
+    disp(dB)
+else
+    disp('dB - Done!')
+end
+%%%%%%%%%%%%%%%%%%%%%%
 
 %% Plots creating %%
 DisplayHeader('Creating plots...')
@@ -224,3 +247,135 @@ DisplayHeader('End of phase 1...')
 
 %% Beginning of phase 2 %%
 DisplayHeader('Phase 2: Synthesis and filtering of Walsh-Hadamard codes')
+
+%% Generate W1 and W2: %%
+DisplayHeader('Generate W1 and W2:')
+
+W1 = Wfun( data1, r );
+W2 = Wfun( data2, r );
+
+if debug_info == true
+    disp('W1 = ')
+    disp(W1)
+    disp('W2 = ')
+    disp(W2)
+else
+    disp('W1 - Done!')
+    disp('W2 - Done!')
+end
+%%%%%%%%%%%%%%%%%%%%%%
+
+%% Generate Wsum: %%
+DisplayHeader('Generate Wsum:')
+
+Wsum = W1 + W2;
+
+%          Debug       %
+if debug_info == true
+    disp('Wsum = ')
+    disp(Wsum)
+else
+    disp('Wsum - Done!')
+end
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Generate fast Walsh transform to Wsum: %%
+DisplayHeader('Generate fast Walsh transform to Wsum:')
+
+Bp = Bpfun(Wsum, r);
+
+%        Debug       %
+if debug_info == true
+    disp('Bp = ')
+    disp(Bp)
+else
+    disp('Bp - Done!')
+end
+%%%%%%%%%%%%%%%%%%%%%%
+
+%% Proof that algorithm works just fine %%
+DisplayHeader('Proof that obtained Bp is correct.')
+
+[ decoded_array, indexes ] = ProofOfConcept(Bp, r);
+
+disp('Origin/Decoded values:')
+disp([ data1 data2 ])
+disp(decoded_array)
+disp('Indexes of decoded values:')
+disp(indexes)
+
+if data1 == decoded_array(1) && data2 == decoded_array(2)
+    disp('Values are the same!')
+else
+    disp('Values doesn''t match.')
+end
+
+%% Noise reduction %%
+DisplayHeader('Noise reduction:')
+disp('- Create noise:')
+noise = GetRandomNoise( 2, length(Wsum) );
+
+%          Debug         %
+if debug_info == true
+    disp('noise =')
+    disp(noise)
+else
+    disp('Noise - Done!')
+end
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+disp(' ')
+disp('- Create Wnoise:')
+Wnoise = Wsum + noise;
+
+%          Debug         %
+if debug_info == true
+    disp('Wnoise =')
+    disp(Wnoise)
+else
+    disp('Wnoise - Done!')
+end
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+disp(' ')
+disp('- Generate fast Walsh transform to Wnoise:')
+Bp_noise = Bpfun(Wnoise, r);
+
+%           Debug          %
+if debug_info == true
+    disp('Bp_noise =')
+    disp(Bp_noise)
+else
+    disp('Bp_noise - Done!')
+end
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+disp(' ')
+disp('- Proof that obtained Bp_noise is correct.')
+
+[ decoded_array, indexes ] = ProofOfConcept(Bp_noise, r);
+
+disp('Origin/Decoded values:')
+disp([ data1 data2 ])
+disp(decoded_array)
+disp('Indexes of decoded values:')
+disp(indexes)
+
+if data1 == decoded_array(1) && data2 == decoded_array(2)
+    disp('Values are the same!')
+else
+    disp('Values doesn''t match.')
+end
+
+%% Plots creating %%
+DisplayHeader('Creating plots...')
+
+% Generating random window title
+splash = GetRandomSplash();
+figure('Name', splash, 'NumberTitle', 'off')
+
+CreateSimplePlot( false, 0, 0, 0, Bp_noise, 'Bpfun(Wnoise, r)' )
+
+disp('Plots created!')
+
+DisplayHeader('End of phase 2...')
