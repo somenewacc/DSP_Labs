@@ -10,36 +10,36 @@ function [ Ms ] = Mfun( A, C )
         throw(exception)
     end
 
-    atmp = A;
-    ctmp = C;
+    a_tmp = A;
+    c_tmp = C;
 
     % N = 2^m - 1
-    Alength = length( atmp );
-    Mlength = 2 .^ Alength - 1;
+    A_length = length( a_tmp );
+    M_length = 2 .^ A_length - 1;
 
     % tmp arrays declaration
-    Mtmp  = zeros( 1, Mlength );
-    Phtmp = zeros( 1, Alength );
+    M_tmp  = zeros( 1, M_length );
+    Ph_tmp = zeros( 1, A_length );
 
-    xorresult = 0;
+    xor_result = 0;
 
-    for j = 1:1:Mlength
+    for j = 1:1:M_length
         % An * Cn
-        for i = 1:1:Alength
-            Phtmp(i) = atmp(i) * ctmp(i);
+        for i = 1:1:A_length
+            Ph_tmp(i) = a_tmp(i) * c_tmp(i);
         end
         % A1 * C1 xor A2 * C2 xor ...
-        for i = 1:1:Alength
-            xorresult = xor( xorresult, Phtmp(i) );
+        for i = 1:1:A_length
+            xor_result = xor( xor_result, Ph_tmp(i) );
         end
         % 0 = 1, 1 = -1
-        if ( xorresult == 0 ); Mtmp(j) = 1; else Mtmp(j) = -1; end
+        if ( xor_result == 0 ); M_tmp(j) = 1; else M_tmp(j) = -1; end
         
-        % concat xorresult + A >> 1
-        atmp = circshift( atmp, [0 1] );
-        atmp(1) = xorresult;
-        xorresult = 0;
+        % concat xor_result + A >> 1
+        a_tmp = circshift( a_tmp, [0 1] );
+        a_tmp(1) = xor_result;
+        xor_result = 0;
     end
 
-    Ms = Mtmp;
+    Ms = M_tmp;
 end

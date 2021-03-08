@@ -8,7 +8,7 @@ function [] = CreateSimplePlot( is_subplot, a, b, c, y, plot_title )
         subplot(a, b, c)
     end
     x = 0:1:length(y) - 1;
-    plot(x, y)
-    title(plot_title, 'Interpreter', 'none')
+    plot( x, y )
+    title( plot_title, 'Interpreter', 'none' )
 end
 

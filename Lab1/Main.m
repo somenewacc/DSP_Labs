@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%
-% Var 2           %
+% variant 2           %
 % A  = 1000000010 %
 % C1 = 0000100111 %
 % C2 = 0000101101 %
@@ -14,15 +14,17 @@ clear
 clc
 
 debug_info = false;
-Var        = 2;
-Work       = 1;
+variant    = 2;
+work       = 1;
 
 A  = [1 0 0 0 0 0 0 0 1 0];
 C1 = [0 0 0 0 1 0 0 1 1 1];
 C2 = [0 0 0 0 1 0 1 1 0 1];
 
-fprintf('*********DSP Lab Work %g*********\n', Work)
-fprintf('********Work variant = %g********\n', Var)
+fprintf('*********DSP Lab Work %g*********\n', work)
+fprintf('********work variant = %g********\n', variant)
+
+DisplayHeader('Phase 1: Synthesis and filtering of M-sequences')
 
 %% Generate M1 and M2 %%
 DisplayHeader('Generate M1 and M2:')
@@ -43,11 +45,11 @@ end
 
 %% Msum %%
 DisplayHeader('Generate Msum:')
-shift = 100 + Var * 10;
+shift = 100 + variant * 10;
 fprintf('Shift = %g\n', shift)
 
-M1_shifted = [M1, zeros(1, shift)];
-M2_shifted = [zeros(1, shift), -M2];
+M1_shifted = [ M1, zeros( 1, shift ) ];
+M2_shifted = [ zeros( 1, shift ), -M2 ];
 
 Msum = M1_shifted + M2_shifted;
 
@@ -86,11 +88,11 @@ AKF = my_sf(M1, M1);
 % VKF = M2, M1
 VKF = my_sf(M2, M1);
 
-% MsumFiltered1 = Msum, M1
-MsumFiltered1 = my_sf(Msum, M1);
+% Msum_filtered1 = Msum, M1
+Msum_filtered1 = my_sf(Msum, M1);
 
-% MsumFiltered2 = Msum, M2
-MsumFiltered2 = my_sf(Msum, M2);
+% Msum_filtered2 = Msum, M2
+Msum_filtered2 = my_sf(Msum, M2);
 
 %               Debug             %
 if debug_info == true
@@ -98,47 +100,47 @@ if debug_info == true
     disp(AKF)
     disp('VKF = ')
     disp(VKF)
-    disp('MsumFiltered1 = ')
-    disp(MsumFiltered1)
-    disp('MsumFiltered2 = ')
-    disp(MsumFiltered2)
+    disp('Msum_filtered1 = ')
+    disp(Msum_filtered1)
+    disp('Msum_filtered2 = ')
+    disp(Msum_filtered2)
 else
-    fprintf('AKF - Done! Max position = %g\n', find(AKF == max(AKF)))
+    fprintf('AKF - Done! Max position = %g\n', find( AKF == max( AKF ) ))
     disp('VKF - Done!')
-    fprintf('MsumFiltered1 - Done! Max position = %g', find(MsumFiltered1 == max(MsumFiltered1)))
-    fprintf('\nMsumFiltered2 - Done! Min position = %g\n', find(MsumFiltered2 == min(MsumFiltered2)))
+    fprintf('Msum_filtered1 - Done! Max position = %g', find( Msum_filtered1 == max( Msum_filtered1 ) ))
+    fprintf('\nMsumFiltered2 - Done! Min position = %g\n', find( Msum_filtered2 == min( Msum_filtered2 ) ))
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 disp(' ')
 disp('- Filtering by built-in function:')
 % AKF = M1, M1
-AKFxcorr = xcorr(M1, M1);
+AKF_xcorr = xcorr(M1, M1);
 
 % VKF = M2, M1
-VKFxcorr = xcorr(M2, M1);
+VKF_xcorr = xcorr(M2, M1);
 
-% MsumFiltered1 = Msum, M1
-MsumFiltered1xcorr = xcorr(Msum, M1);
+% Msum_filtered1 = Msum, M1
+Msum_filtered1_xcorr = xcorr(Msum, M1);
 
-% MsumFiltered2 = Msum, M2
-MsumFiltered2xcorr = xcorr(Msum, M2);
+% Msum_filtered2 = Msum, M2
+Msum_filtered2_xcorr = xcorr(Msum, M2);
 
 %               Debug             %
 if debug_info == true
-    disp('AKFxcorr = ')
-    disp(AKFxcorr)
-    disp('VKFxcorr = ')
-    disp(VKFxcorr)
-    disp('MsumFiltered1xcorr = ')
-    disp(MsumFiltered1xcorr)
-    disp('MsumFiltered2xcorr = ')
-    disp(MsumFiltered2xcorr)
+    disp('AKF_xcorr = ')
+    disp(AKF_xcorr)
+    disp('VKF_xcorr = ')
+    disp(VKF_xcorr)
+    disp('Msum_filtered1_xcorr = ')
+    disp(Msum_filtered1_xcorr)
+    disp('Msum_filtered2_xcorr = ')
+    disp(Msum_filtered2_xcorr)
 else
-    fprintf('AKFxcorr - Done! Max position = %g\n', find(AKFxcorr == max(AKFxcorr)))
-    disp('VKFxcorr - Done!')
-    fprintf('MsumFiltered1xcorr - Done! Max position = %g', find(MsumFiltered1xcorr == max(MsumFiltered1xcorr)))
-    fprintf('\nMsumFiltered2xcorr - Done! Min position = %g\n', find(MsumFiltered2xcorr == min(MsumFiltered2xcorr)))
+    fprintf('AKF_xcorr - Done! Max position = %g\n', find( AKF_xcorr == max( AKF_xcorr ) ))
+    disp('VKF_xcorr - Done!')
+    fprintf('Msum_filtered1_xcorr - Done! Max position = %g', find( Msum_filtered1_xcorr == max( Msum_filtered1_xcorr ) ))
+    fprintf('\nMsumFiltered2xcorr - Done! Min position = %g\n', find( Msum_filtered2_xcorr == min( Msum_filtered2_xcorr ) ))
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -150,13 +152,13 @@ splash = GetRandomSplash();
 figure('Name', splash, 'NumberTitle', 'off')
 
 CreateSimplePlot( true, 4, 2, 1, AKF, 'my_sf(M1, M1)' )
-CreateSimplePlot( true, 4, 2, 2, AKFxcorr, 'xcorr(M1, M1)' )
+CreateSimplePlot( true, 4, 2, 2, AKF_xcorr, 'xcorr(M1, M1)' )
 CreateSimplePlot( true, 4, 2, 3, VKF, 'my_sf(M2, M1)' )
-CreateSimplePlot( true, 4, 2, 4, VKFxcorr, 'xcorr(M2, M1)' )
-CreateSimplePlot( true, 4, 2, 5, MsumFiltered1, 'my_sf(Msum, M1)' )
-CreateSimplePlot( true, 4, 2, 6, MsumFiltered1xcorr, 'xcorr(Msum, M1)' )
-CreateSimplePlot( true, 4, 2, 7, MsumFiltered2, 'my_sf(Msum, M2)' )
-CreateSimplePlot( true, 4, 2, 8, MsumFiltered2xcorr, 'xcorr(Msum, M2)' )
+CreateSimplePlot( true, 4, 2, 4, VKF_xcorr, 'xcorr(M2, M1)' )
+CreateSimplePlot( true, 4, 2, 5, Msum_filtered1, 'my_sf(Msum, M1)' )
+CreateSimplePlot( true, 4, 2, 6, Msum_filtered1_xcorr, 'xcorr(Msum, M1)' )
+CreateSimplePlot( true, 4, 2, 7, Msum_filtered2, 'my_sf(Msum, M2)' )
+CreateSimplePlot( true, 4, 2, 8, Msum_filtered2_xcorr, 'xcorr(Msum, M2)' )
 
 disp('Plots created!')
 
@@ -213,3 +215,5 @@ CreateSimplePlot( true, 3, 1, 2, M3_filtered, 'my_sf(M3, M1)' )
 CreateSimplePlot( true, 3, 1, 3, dB, 'my_sf(M3, M1), dB' )
 
 disp('Plots created!')
+
+DisplayHeader('End of phase 1...')
