@@ -6,6 +6,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [ splash ] = GetRandomSplash()
+
     % Hack: align lines with spaces.
     splashes = ['Dont look at me     '
                 'Macroscopic!        '

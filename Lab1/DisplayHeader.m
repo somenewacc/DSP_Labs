@@ -5,11 +5,10 @@
 %       any normal string functionality       %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [ ] = DisplayHeader( header )
+function [] = DisplayHeader( header )
     header_length   = length( header );
     underscore_line = repmat( '-', 1, header_length );
 
     fprintf( strcat( '\n', header ) )
     fprintf( strcat( '\n', underscore_line, '\n' ) )
 end
-

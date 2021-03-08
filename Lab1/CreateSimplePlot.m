@@ -4,6 +4,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [] = CreateSimplePlot( is_subplot, a, b, c, y, plot_title )
+
     if is_subplot == true
         subplot(a, b, c)
     end
@@ -11,4 +12,3 @@ function [] = CreateSimplePlot( is_subplot, a, b, c, y, plot_title )
     plot( x, y )
     title( plot_title, 'Interpreter', 'none' )
 end
-

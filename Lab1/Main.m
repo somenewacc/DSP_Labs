@@ -1,9 +1,13 @@
-%%%%%%%%%%%%%%%%%%%
-% variant 2           %
-% A  = 1000000010 %
-% C1 = 0000100111 %
-% C2 = 0000101101 %
-%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%         Variant 2         %
+%      A  = 1000000010      %
+%      C1 = 0000100111      %
+%      C2 = 0000101101      %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   data1 = 2               %
+%   data2 = 149             %
+%       r = 10              %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Maybe pretty much overloaded implementation of this laboratory work.
 % But why not?
@@ -217,3 +221,6 @@ CreateSimplePlot( true, 3, 1, 3, dB, 'my_sf(M3, M1), dB' )
 disp('Plots created!')
 
 DisplayHeader('End of phase 1...')
+
+%% Beginning of phase 2 %%
+DisplayHeader('Phase 2: Synthesis and filtering of Walsh-Hadamard codes')
