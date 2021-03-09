@@ -47,9 +47,12 @@ function [ Mf ] = my_sf( A, B )
     for j = 2:1:Mf_length
         a_oper = circshift( a_oper, [0 1] );
         a_tmp  = circshift( a_tmp, [0 1] );
+
         a_oper(1) = a_tmp(1);
-        a_tmp(1) = 0;
+        a_tmp(1)  = 0;
+
         Mf_tmp(j) = sum( b_tmp .* a_oper );
     end
+
     Mf = Mf_tmp;
 end

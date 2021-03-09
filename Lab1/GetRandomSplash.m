@@ -65,6 +65,9 @@ function [ splash ] = GetRandomSplash()
                 'Pretty scary!       '
                 ];
 
+    % Get the size of matrix to
+    % set splash length and
+    % number of splashes
     splashes_size = size( splashes );
     line_length   = splashes_size( 2 );
     splashes_size = splashes_size( 1 );
@@ -75,5 +78,6 @@ function [ splash ] = GetRandomSplash()
     for i = 1:1:line_length
         splash_tmp(i) = splashes( choice, i );
     end
+
     splash = splash_tmp;
 end

@@ -11,6 +11,11 @@
 function [] = DisplayHeader( header )
 
     header_length   = length( header );
+
+    % All this function was made only
+    % to rid of manually calculating
+    % how many dashes I need to make
+    % an underline.
     dash_line = repmat( '-', 1, header_length );
 
     fprintf( strcat( '\n', header ) )

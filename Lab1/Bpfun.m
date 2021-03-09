@@ -16,12 +16,14 @@ function [ Bp ] = Bpfun( w, r )
 
     % Length between origins of 'wing'
     delta = w_length / 2;
+
+    % Set the carriage position to first element of layer
+    position = 1;
     
     % I think that it's more reliable
     % to make 'while delta >= 1' loop
     % but if I have 'r' as input
     % it should be ok with it
-    position = 1;
     for i = 1:1:r
         % It's better to use while loop with current possition in layer
         while position <= w_length
