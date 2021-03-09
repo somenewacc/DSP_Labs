@@ -23,7 +23,7 @@ function [ splash ] = GetRandomSplash()
                 'sqrt(-1) love you!  '
                 'Lets dance!         '
                 '20 GOTO 10!         '
-                '[[]] lines of code! '
+                '790 lines of code!  '
                 'I miss ADOM!        '
                 'More Digital!       '
                 'Absolutely no memes!'
