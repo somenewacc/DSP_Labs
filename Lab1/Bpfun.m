@@ -19,6 +19,8 @@ function [ Bp ] = Bpfun( w, r )
 
     % Set the carriage position to first element of layer
     position = 1;
+
+    Bp_tmp = zeros( 1, w_length );
     
     % I think that it's more reliable
     % to make 'while delta >= 1' loop
@@ -53,7 +55,7 @@ function [ Bp ] = Bpfun( w, r )
             end
         end
         % Latest layer is an answer
-        Bp = next_layer;
+        Bp_tmp = next_layer;
         
         % Jump to next layer
         current_layer = next_layer;
@@ -61,4 +63,6 @@ function [ Bp ] = Bpfun( w, r )
         delta = delta / 2;
         position = 1;
     end
+
+    Bp = Bp_tmp;
 end
