@@ -186,7 +186,7 @@ disp('Plots created!')
 %% Noise reduction %%
 DisplayHeader('Noise reduction:')
 disp('- Create noise:')
-noise = GetRandomNoise( 2, length(M1) );
+noise = GetRandomNoise( variant, length(M1) );
 
 %          Debug        %
 if debug_info == true
@@ -303,24 +303,35 @@ end
 %% Proof that algorithm works just fine %%
 DisplayHeader('Proof that obtained Bp is correct.')
 
-[ decoded_array, indexes ] = ProofOfConcept( Bp, r );
+% The permissible difference between noise and signal in percentages.
+tolerance = 0.25;
+
+[ decoded_array, indexes ] = ProofOfConcept( Bp, r, tolerance );
+
+data_sorted    = sort( [ data1 data2 ] );
+decoded_sorted = sort( decoded_array );
+indexes_sorted = sort( indexes );
 
 disp('Origin/Decoded values:')
-disp([ data1 data2 ])
-disp(decoded_array)
+disp(data_sorted)
+disp(decoded_sorted)
 disp('Indexes of decoded values:')
-disp(indexes)
+disp(indexes_sorted)
 
-if data1 == decoded_array(1) && data2 == decoded_array(2)
-    disp('Values are the same!')
+if length(data_sorted) == length(decoded_sorted)
+    if data_sorted(1) == decoded_sorted(1) && data_sorted(2) == decoded_sorted(2)
+        disp('Values are the same!')
+    else
+        disp('Values doesn''t match.')
+    end
 else
-    disp('Values doesn''t match.')
+    disp('Different number of values!')
 end
 
 %% Noise reduction %%
 DisplayHeader('Noise reduction:')
 disp('- Create noise:')
-noise = GetRandomNoise( 2, length(Wsum) );
+noise = GetRandomNoise( variant, length(Wsum) );
 
 %         Debug         %
 if debug_info == true
@@ -360,7 +371,7 @@ end
 disp(' ')
 disp('- Proof that obtained Bp_noise is correct.')
 
-[ decoded_array, indexes ] = ProofOfConcept( Bp_noise, r );
+[ decoded_array, indexes ] = ProofOfConcept( Bp_noise, r, tolerance );
 
 data_sorted    = sort( [ data1 data2 ] );
 decoded_sorted = sort( decoded_array );
@@ -372,10 +383,14 @@ disp(decoded_sorted)
 disp('Indexes of decoded values:')
 disp(indexes_sorted)
 
-if data_sorted(1) == decoded_sorted(1) && data_sorted(2) == decoded_sorted(2)
-    disp('Values are the same!')
+if length(data_sorted) == length(decoded_sorted)
+    if  data_sorted(1) == decoded_sorted(1) && data_sorted(2) == decoded_sorted(2)
+        disp('Values are the same!')
+    else
+        disp('Values doesn''t match.')
+    end
 else
-    disp('Values doesn''t match.')
+    disp('Different number of values!')
 end
 
 %% Plots creating %%

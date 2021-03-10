@@ -7,19 +7,23 @@
 
 function [ Ms ] = Mfun( A, C )
 
-    % Just for fun, don't think it's necessary here
-    if length(A) ~= length(C)
-        exception = MException('Mfun:lengthError', 'Lengths must be equal!');
-        throw(exception)
-    end
-
     a_tmp = A;
     c_tmp = C;
 
-    % N = 2^m - 1
     A_length = length( a_tmp );
-    M_length = 2 .^ A_length - 1;
+    C_length = length( c_tmp );
 
+    % Make equal lengths
+    if A_length < C_length
+        a_tmp = [ zeros( 1, C_length - A_length ) a_tmp ];
+        A_length = length( a_tmp );
+    elseif A_length > C_length
+        c_tmp = [ zeros( 1, A_length - C_length ) c_tmp ];
+    end
+
+    % N = 2^m - 1
+    M_length = 2 .^ A_length - 1;
+    
     % tmp arrays declaration
     M_tmp  = zeros( 1, M_length );
     Ph_tmp = zeros( 1, A_length );

@@ -6,19 +6,19 @@
 %  Github: somenewacc                   %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [ decoded_array, indexes ] = ProofOfConcept( Bp, r )
+function [ decoded_array, indexes ] = ProofOfConcept( Bp, r, tolerance )
 
     Bp_tmp = Bp;
     
     Bp_length = length(Bp);
 
     % Value to find in code
-    salt      = 2 ^ r;
+    salt = 2 ^ r;
 
     % I made this because we also have noisy codes
-    % Normally you can set delta like +-( salt / 2)
-    range_lower = salt - ( salt / 2 );
-    range_upper = salt + ( salt / 2 );
+    % Normally you can set tolerance at 0.3
+    range_lower = salt - salt * tolerance;
+    range_upper = salt + salt * tolerance;
 
     decoded_array = zeros( 1, Bp_length );
     indexes       = zeros( 1, Bp_length );

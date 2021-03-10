@@ -15,22 +15,30 @@ function [ Mf ] = my_sf( A, B )
     A_length = length( a_tmp );
     B_length = length( b_tmp );
 
+    % Max length to calculate the size
+    % of Mf
+    max_length = max([A_length B_length]);
+
+    % To calculate zeros from the beginning
+    % or from the end
+    length_delta = A_length - B_length;
+
+    if length_delta < 0
+        length_delta = 0;
+    end
+
     % Flip A and B arrays horizontally
     a_tmp = fliplr( a_tmp );
     b_tmp = fliplr( b_tmp );
 
-    % Nn = Na + Nb + 1 
-    % Not sure about this, because I use algorithm 
-    % that I used while paperwork.
-    Mf_length = A_length + B_length + 1;
+    % Decided to make 2 * max - 1 cause it would
+    % completely match with xcorr
+    Mf_length = 2 * max_length - 1;
     
     % Declaration temp vars
     a_oper = zeros( 1, B_length );
     Mf_tmp = zeros( 1, Mf_length );
 
-    % First with full 0 in signal b4 1st shift
-    Mf_tmp(1) = sum( b_tmp .* a_oper );
-    
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Shift signal into source %
     % Example (src = 011):     %
@@ -44,7 +52,7 @@ function [ Mf ] = my_sf( A, B )
     % 5: |   |001|001| 1 |     %
     % 6: |   |000|000| 0 |     %
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    for j = 2:1:Mf_length
+    for j = length_delta + 1:1:Mf_length
         a_oper = circshift( a_oper, [0 1] );
         a_tmp  = circshift( a_tmp, [0 1] );
 
