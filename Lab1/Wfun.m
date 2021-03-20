@@ -15,10 +15,7 @@ function [ W ] = Wfun( data, r )
 
     W_tmp = zeros( 1, W_length );
     T_tmp = zeros( 1, T_length );
-    
-    % idk if I have the right to use de2bi
-    % but honestly I don't wanna implement
-    % a bicycle
+
     data_binary = de2bi(data_tmp, 'left-msb');
     % Length of data_binary and r must be equal
     data_binary = [ zeros( 1, r - length( data_binary ) ) data_binary ];
