@@ -155,11 +155,7 @@ max_index_calc = f0 * T * N;
 
 [zero_point_left, zero_point_right] = GetZeroPoints( dft, max_index );
 
-if zero_point_left && zero_point_right
-    zeros_practical = zero_point_right - zero_point_left;
-else
-    fprintf('One or two zeros wasn''t found in dft!\n')
-end
+zeros_practical = zero_point_right - zero_point_left;
 
 A = max_index - 1;
 B = max_index;
