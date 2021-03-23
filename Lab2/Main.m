@@ -161,8 +161,8 @@ else
     fprintf('One or two zeros wasn''t found in dft!\n')
 end
 
-A = zero_point_left + 1;
-B = zero_point_right - 1;
+A = max_index - 1;
+B = max_index;
 
 m_A = A - max_index;
 m_B = B - max_index;
@@ -175,7 +175,18 @@ delta_phi_B = m_B * v * ( 2 * pi / N );
 phi_m_A = delta_phi_A + phi0;
 phi_m_B = delta_phi_B + phi0;
 
-angle_dft_s = atand( (phi_m_A - phi_m_B) ./ (m_B - m_A) );
+angle_dft_s_calculated = atand( (phi_m_A - phi_m_B) ./ (m_B - m_A) );
+
+amplitude_shifted = abs(dft_shifted);
+phase_shifted     = atan2( imag(dft_shifted) + 1e-6, real(dft_shifted) + 1e-3 );
+
+y1 = phase_shifted(A);
+y2 = phase_shifted(B);
+
+x1 = A;
+x2 = B;
+
+angle_dft_s = atand( (y1 - y2) ./ (x2 - x1) );
 
 fprintf('Maximum dft = %g\n', max_value)
 fprintf('Calculated maximum dft = %g\n', max_value_calc)
@@ -184,15 +195,13 @@ fprintf('Calculated index of maximum dft = %g\n', max_index_calc)
 fprintf('Zeros of dft = %g\n', zeros_practical)
 fprintf('Calculated zeros of dft = %g\n', 2 * N / Ni)
 fprintf('Angle = %g%c\n', angle_dft_s, char(176))
+fprintf('Calculated angle = %g%c\n', angle_dft_s_calculated, char(176))
 
 amplitude = abs(dft);
 phase     = atan2( imag(dft) + 1e-6, real(dft) + 1e-3 );
 
 fprintf('Phase at maximum dft = %g\n', phase(max_index))
 fprintf('Calculated phase = %g\n', phi0 * 2)
-
-amplitude_shifted = abs(dft_shifted);
-phase_shifted     = atan2( imag(dft_shifted) + 1e-6, real(dft_shifted) + 1e-3 );
 
 fprintf('\n- Creating plots\n')
 splash = GetRandomSplash();
