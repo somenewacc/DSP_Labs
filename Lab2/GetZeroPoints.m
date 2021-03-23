@@ -36,9 +36,14 @@ function [ left, right ] = GetZeroPoints( dft, max_index )
         end
         current_index = current_index + delta;
         if current_index >= length(dft) || current_index <= 0
-            right = 0;
-            left  = 0;
-            break
+            if ~is_right
+                is_right = true;
+                current_index = max_index;
+                min_value = abs( dft(max_index) );
+                delta = -1;
+            else
+                break
+            end
         end
     end
 end
