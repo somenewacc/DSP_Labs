@@ -158,7 +158,7 @@ max_index_calc = f0 * T * N;
 if zero_point_left && zero_point_right
     zeros_practical = zero_point_right - zero_point_left;
 else
-    fprintf('One or two zeros wasn''t found in dft!')
+    fprintf('One or two zeros wasn''t found in dft!\n')
 end
 
 A = zero_point_left + 1;
