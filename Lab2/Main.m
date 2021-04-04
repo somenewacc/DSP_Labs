@@ -88,10 +88,10 @@ fprintf('\n- Creating plots\n')
 splash = GetRandomSplash();
 figure( 'Name', splash, 'NumberTitle', 'off' )
 
-CreateSimplePlot(true, true, 2, 2, 1, amplitude, 'Amplitude')
-CreateSimplePlot(true, true, 2, 2, 2, amplitude_noisy, 'Amplitude noisy')
-CreateSimplePlot(true, true, 2, 2, 3, phase, 'Phase')
-CreateSimplePlot(true, true, 2, 2, 4, phase_noisy, 'Phase noisy')
+CreateSimplePlot(amplitude, 'subplot', [2 2 1], 'title', 'Amplitude')
+CreateSimplePlot(amplitude_noisy, 'subplot', [2 2 2], 'title', 'Amplitude noisy')
+CreateSimplePlot(phase, 'subplot', [2 2 3], 'title', 'Phase')
+CreateSimplePlot(phase_noisy, 'subplot', [2 2 4], 'title', 'Phase noisy')
 fprintf('Plots created!\n')
 
 DisplayHeader('Task 2: Investigating the DFT of a complex harmonic signal clipping')

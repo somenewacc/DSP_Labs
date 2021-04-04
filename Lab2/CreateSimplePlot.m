@@ -6,19 +6,47 @@
 %  Github: somenewacc                       %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [] = CreateSimplePlot( is_subplot, is_stem, a, b, c, y, plot_title )
+% TODO: User inputParser
 
-    if is_subplot
-        subplot(a, b, c)
+function [] = CreateSimplePlot( y, varargin )
+
+    varargin_str = cellfun(@(x) num2str(x), varargin, 'UniformOutput',0);
+    if ismember('subplot', varargin_str)
+        subplot_values_idx = find(strcmp(varargin_str, 'subplot')) + 1;
+        subplot_values = varargin{subplot_values_idx};
+        if length(subplot_values) == 3
+            a = subplot_values(1);
+            b = subplot_values(2);
+            c = subplot_values(3);
+            subplot(a, b, c)
+        else
+            fprintf('Wrong subplot values!\n')
+        end
     end
-    if is_stem
-        stem(y, '.b')
-        hold on
-        plot(y, '.r-')
+
+    if ismember('custom_x', varargin_str)
+        x_idx = find(strcmp(varargin_str, 'custom_x')) + 1;
+        if isnumeric(varargin{x_idx}) && length(varargin{x_idx}) == length(y)
+            x = varargin{x_idx};
+        else
+            fprintf('Problem with x value, using default!\n')
+            x = 0:1:length(y) - 1;
+        end
     else
-        plot(y)
+        x = 0:1:length(y) - 1;
     end
 
-    % Get rid of interpreters since we don't have any TeX in this case
-    title( plot_title, 'Interpreter', 'none' )
+    if ismember('stem', varargin_str)
+        stem(x, y, '.b')
+        hold on
+        plot(x, y, '.r-')
+    else
+        plot(x, y)
+    end
+
+    if ismember('title', varargin_str)
+        title_idx = find(strcmp(varargin_str, 'title')) + 1;
+        plot_title = varargin{title_idx};
+        title( plot_title, 'Interpreter', 'none' )
+    end
 end
