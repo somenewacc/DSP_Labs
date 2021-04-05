@@ -8,9 +8,12 @@
 
 function [ splash ] = GetRandomSplash()
 
+    % Make sure that encoding is UTF-8
+    % to display right unicode symbols
     if ~strcmp(slCharacterEncoding, 'UTF-8')
         slCharacterEncoding('UTF-8');
     end
+
     splashes = {'Dont look at me'
                 'Macroscopic!'
                 'Ultimate edition!'

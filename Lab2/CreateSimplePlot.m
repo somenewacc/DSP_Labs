@@ -2,15 +2,22 @@
 %  Function to create a pretty simple plot  %
 %     That used frequently in this work     %
 %                                           %
+%  Arguments:                               %
+%  <'subplot', [a b c]>                     %
+%  <'custom_x', x>                          %
+%  <'stem'>                                 %
+%  <'title', charstr>                       %
 %  Author: Bezborodov Grigoriy              %
 %  Github: somenewacc                       %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% TODO: User inputParser
+% TODO: Use inputParser
 
 function [] = CreateSimplePlot( y, varargin )
 
-    varargin_str = cellfun(@(x) num2str(x), varargin, 'UniformOutput',0);
+    varargin_str = cellfun( @(x) num2str(x), varargin, 'UniformOutput', 0 );
+
+    %% Draw plot in subplot %%
     if ismember('subplot', varargin_str)
         subplot_values_idx = find(strcmp(varargin_str, 'subplot')) + 1;
         subplot_values = varargin{subplot_values_idx};
@@ -24,6 +31,7 @@ function [] = CreateSimplePlot( y, varargin )
         end
     end
 
+    %% Define custom x instead of '0:1:length(y) - 1' %%
     if ismember('custom_x', varargin_str)
         x_idx = find(strcmp(varargin_str, 'custom_x')) + 1;
         if isnumeric(varargin{x_idx}) && length(varargin{x_idx}) == length(y)
@@ -36,6 +44,7 @@ function [] = CreateSimplePlot( y, varargin )
         x = 0:1:length(y) - 1;
     end
 
+    %% Stemmed plot %%
     if ismember('stem', varargin_str)
         stem(x, y, '.b')
         hold on
@@ -44,6 +53,7 @@ function [] = CreateSimplePlot( y, varargin )
         plot(x, y)
     end
 
+    %% Add title to plot %%
     if ismember('title', varargin_str)
         title_idx = find(strcmp(varargin_str, 'title')) + 1;
         plot_title = varargin{title_idx};
