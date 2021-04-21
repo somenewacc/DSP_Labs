@@ -13,6 +13,9 @@
 %  Github: somenewacc           %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% TODO: Work has some issues.
+% Not the best way.
+
 %% Globals %%
 close all
 clear
@@ -270,7 +273,7 @@ Sg_base        = cos(pi .* ( (F/Nimp .* (n.^2) .* T ) - (F .* n .* T) + c)) + 1i
 Sg_base_center = [Sg_base(center:end), zeros(1, N - Nimp), Sg_base(1:(center - 1))];
 fprintf('Sg_pass_center - Done!\n')
 
-h_base        = fliplr(cos(pi .* ( (F/Nimp .* (n.^2) .* T ) - (F .* n .* T))) - 1i * sin(pi .* ( (F/Nimp .* (n.^2) .* T ) - (F .* n .* T))));
+h_base        = cos(pi .* ( (F/Nimp .* (n.^2) .* T ) - (F .* n .* T))) - 1i * sin(pi .* ( (F/Nimp .* (n.^2) .* T ) - (F .* n .* T)));
 h_base_center = [h_base(center:end), zeros(1, N - Nimp), h_base(1:(center - 1))];
 fprintf('h_pass_center - Done!\n')
 
