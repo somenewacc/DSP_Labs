@@ -77,7 +77,7 @@ fprintf('\nCenter Position = %g\n', center_position)
 
 A_s = abs(S_pass_center);
 
-H = A_s(center_position);
+H = A_s(center_position + 1);
 
 h = H / 2;
 
@@ -89,23 +89,41 @@ fprintf('H = %g\n', H)
 
 index2 = index2 + center_position - 2;
 
+fprintf('\nFirst task\n')
 fprintf('x1 = %g\n', index)
 fprintf('x2 = %g\n', index2)
-
 fprintf('delta_x = %g\n', index2 - index)
+fprintf('Practical   F = %d\n', round((fs / N) * (index2 - index)))
+fprintf('Theoretical F = %d\n', F)
 
 fprintf('\n- Creating plots\n')
 splash = GetRandomSplash();
 figure( 'Name', splash, 'NumberTitle', 'off' )
 
-CreateSimplePlot(real(Sg_pass_center), 'subplot', [4 2 1], 'title', 'Re(s)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(imag(Sg_pass_center), 'subplot', [4 2 3], 'title', 'Im(s)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(real(h_pass_center), 'subplot', [4 2 5], 'title', 'Re(h)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(imag(h_pass_center), 'subplot', [4 2 7], 'title', 'Im(h)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(abs(S_pass_center), 'subplot', [4 2 2], 'title', 'A(S)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(phi_S, 'subplot', [4 2 4], 'title', 'phi(S)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(abs(H_pass_center), 'subplot', [4 2 6], 'title', 'A(H)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(phi_H, 'subplot', [4 2 8], 'title', 'phi(H)', 'custom_x', 0:1:N-1, 'grid')
+max_Sg = max(abs(sqrt(real(Sg_pass_center) .^ 2 + imag(Sg_pass_center) .^ 2)));
+max_h = max(abs(sqrt(real(h_pass_center) .^ 2 + imag(h_pass_center) .^ 2)));
+
+max_S = max(abs(S_pass_center));
+max_H = max(abs(H_pass_center));
+
+fprintf('\nThird task\n')
+fprintf('A(s)/A(h) = %g\n', max_Sg / max_h)
+fprintf('A(S)/A(H) = %g\n', max_S / max_H)
+
+if abs(((max_Sg / max_h) / (max_S / max_H)) - 1) < 0.1
+    fprintf('Check passed!\n')
+else
+    fprintf('Something wrong!\n')
+end
+
+CreateSimplePlot(real(Sg_pass_center), 'subplot', [4 2 1], 'title', 'Re(s)', 'grid')
+CreateSimplePlot(imag(Sg_pass_center), 'subplot', [4 2 3], 'title', 'Im(s)', 'grid')
+CreateSimplePlot(real(h_pass_center), 'subplot', [4 2 5], 'title', 'Re(h)', 'grid')
+CreateSimplePlot(imag(h_pass_center), 'subplot', [4 2 7], 'title', 'Im(h)', 'grid')
+CreateSimplePlot(abs(S_pass_center), 'subplot', [4 2 2], 'title', 'A(S)', 'grid')
+CreateSimplePlot(phi_S, 'subplot', [4 2 4], 'title', 'phi(S)', 'grid')
+CreateSimplePlot(abs(H_pass_center), 'subplot', [4 2 6], 'title', 'A(H)', 'grid')
+CreateSimplePlot(phi_H, 'subplot', [4 2 8], 'title', 'phi(H)', 'grid')
 
 fprintf('Plots created!\n')
 
@@ -121,10 +139,11 @@ phi_MULT = atan(imag(MULT)./real(MULT));
 fprintf('MULT\t- Done!\n')
 fprintf('phi_MULT\t- Done!\n')
 
+fprintf('\nFourth task\n')
 phi0 = c * pi;
 fprintf('phi0 = %g\n', phi0)
 
-phi_at_center = phi_MULT(center_position);
+phi_at_center = phi_MULT(center_position + 1);
 fprintf('phi_at_center = %g\n', phi_at_center)
 
 if abs((phi_at_center / phi0) - 1) < 0.05
@@ -137,14 +156,14 @@ fprintf('\n- Creating plots\n')
 splash = GetRandomSplash();
 figure( 'Name', splash, 'NumberTitle', 'off' )
 
-CreateSimplePlot(real(SJTD), 'subplot', [4 2 1], 'title', 'Re(SJTD)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(imag(SJTD), 'subplot', [4 2 3], 'title', 'Im(SJTD)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(abs(SJTD), 'subplot', [4 2 5], 'title', 'A(SJTD)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(A_db_SJTD, 'subplot', [4 2 7], 'title', 'A(SJTD) dB', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(real(MULT), 'subplot', [4 2 2], 'title', 'Re(MULT)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(imag(MULT), 'subplot', [4 2 4], 'title', 'Im(MULT)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(abs(MULT), 'subplot', [4 2 6], 'title', 'A(MULT)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(phi_MULT, 'subplot', [4 2 8], 'title', 'phi(MULT)', 'custom_x', 0:1:N-1, 'grid')
+CreateSimplePlot(real(SJTD), 'subplot', [4 2 1], 'title', 'Re(SJTD)', 'grid')
+CreateSimplePlot(imag(SJTD), 'subplot', [4 2 3], 'title', 'Im(SJTD)', 'grid')
+CreateSimplePlot(abs(SJTD), 'subplot', [4 2 5], 'title', 'A(SJTD)', 'grid')
+CreateSimplePlot(A_db_SJTD, 'subplot', [4 2 7], 'title', 'A(SJTD) dB', 'grid')
+CreateSimplePlot(real(MULT), 'subplot', [4 2 2], 'title', 'Re(MULT)', 'grid')
+CreateSimplePlot(imag(MULT), 'subplot', [4 2 4], 'title', 'Im(MULT)', 'grid')
+CreateSimplePlot(abs(MULT), 'subplot', [4 2 6], 'title', 'A(MULT)', 'grid')
+CreateSimplePlot(phi_MULT, 'subplot', [4 2 8], 'title', 'phi(MULT)', 'grid')
 
 fprintf('Plots created!\n')
 
@@ -173,14 +192,14 @@ fprintf('\n- Creating plots\n')
 splash = GetRandomSplash();
 figure( 'Name', splash, 'NumberTitle', 'off' )
 
-CreateSimplePlot(real(Sg_pass_zero), 'subplot', [4 2 1], 'title', 'Re(s)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(imag(Sg_pass_zero), 'subplot', [4 2 3], 'title', 'Im(s)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(real(h_pass_zero), 'subplot', [4 2 5], 'title', 'Re(h)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(imag(h_pass_zero), 'subplot', [4 2 7], 'title', 'Im(h)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(abs(S_pass_zero), 'subplot', [4 2 2], 'title', 'A(S)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(phi_S, 'subplot', [4 2 4], 'title', 'phi(S)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(abs(H_pass_zero), 'subplot', [4 2 6], 'title', 'A(H)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(phi_H, 'subplot', [4 2 8], 'title', 'phi(H)', 'custom_x', 0:1:N-1, 'grid')
+CreateSimplePlot(real(Sg_pass_zero), 'subplot', [4 2 1], 'title', 'Re(s)', 'grid')
+CreateSimplePlot(imag(Sg_pass_zero), 'subplot', [4 2 3], 'title', 'Im(s)', 'grid')
+CreateSimplePlot(real(h_pass_zero), 'subplot', [4 2 5], 'title', 'Re(h)', 'grid')
+CreateSimplePlot(imag(h_pass_zero), 'subplot', [4 2 7], 'title', 'Im(h)', 'grid')
+CreateSimplePlot(abs(S_pass_zero), 'subplot', [4 2 2], 'title', 'A(S)', 'grid')
+CreateSimplePlot(phi_S, 'subplot', [4 2 4], 'title', 'phi(S)', 'grid')
+CreateSimplePlot(abs(H_pass_zero), 'subplot', [4 2 6], 'title', 'A(H)', 'grid')
+CreateSimplePlot(phi_H, 'subplot', [4 2 8], 'title', 'phi(H)', 'grid')
 
 fprintf('Plots created!\n')
 
@@ -213,6 +232,7 @@ x2 = 418;
 delta_x2 = x2 - x1;
 delta_x2_T = T * delta_x2;
 
+fprintf('\nFifth task\n')
 mean_of_deltas = mean([delta_x1_T delta_x2_T]);
 fprintf('mean_of_deltas = %g\n', mean_of_deltas)
 
@@ -229,14 +249,14 @@ fprintf('\n- Creating plots\n')
 splash = GetRandomSplash();
 figure( 'Name', splash, 'NumberTitle', 'off' )
 
-CreateSimplePlot(real(SJTD), 'subplot', [4 2 1], 'title', 'Re(SJTD)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(imag(SJTD), 'subplot', [4 2 3], 'title', 'Im(SJTD)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(abs(SJTD), 'subplot', [4 2 5], 'title', 'A(SJTD)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(A_db_SJTD, 'subplot', [4 2 7], 'title', 'A(SJTD) dB', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(real(MULT), 'subplot', [4 2 2], 'title', 'Re(MULT)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(imag(MULT), 'subplot', [4 2 4], 'title', 'Im(MULT)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(abs(MULT), 'subplot', [4 2 6], 'title', 'A(MULT)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(phi_MULT, 'subplot', [4 2 8], 'title', 'phi(MULT)', 'custom_x', 0:1:N-1, 'grid')
+CreateSimplePlot(real(SJTD), 'subplot', [4 2 1], 'title', 'Re(SJTD)', 'grid')
+CreateSimplePlot(imag(SJTD), 'subplot', [4 2 3], 'title', 'Im(SJTD)', 'grid')
+CreateSimplePlot(abs(SJTD), 'subplot', [4 2 5], 'title', 'A(SJTD)', 'grid')
+CreateSimplePlot(A_db_SJTD, 'subplot', [4 2 7], 'title', 'A(SJTD) dB', 'grid')
+CreateSimplePlot(real(MULT), 'subplot', [4 2 2], 'title', 'Re(MULT)', 'grid')
+CreateSimplePlot(imag(MULT), 'subplot', [4 2 4], 'title', 'Im(MULT)', 'grid')
+CreateSimplePlot(abs(MULT), 'subplot', [4 2 6], 'title', 'A(MULT)', 'grid')
+CreateSimplePlot(phi_MULT, 'subplot', [4 2 8], 'title', 'phi(MULT)', 'grid')
 
 fprintf('Plots created!\n')
 
@@ -266,14 +286,14 @@ fprintf('\n- Creating plots\n')
 splash = GetRandomSplash();
 figure( 'Name', splash, 'NumberTitle', 'off' )
 
-CreateSimplePlot(real(Sg_base_center), 'subplot', [4 2 1], 'title', 'Re(s)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(imag(Sg_base_center), 'subplot', [4 2 3], 'title', 'Im(s)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(real(h_base_center), 'subplot', [4 2 5], 'title', 'Re(h)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(imag(h_base_center), 'subplot', [4 2 7], 'title', 'Im(h)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(abs(S_base_center), 'subplot', [4 2 2], 'title', 'A(S)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(phi_S, 'subplot', [4 2 4], 'title', 'phi(S)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(abs(H_base_center), 'subplot', [4 2 6], 'title', 'A(H)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(phi_H, 'subplot', [4 2 8], 'title', 'phi(H)', 'custom_x', 0:1:N-1, 'grid')
+CreateSimplePlot(real(Sg_base_center), 'subplot', [4 2 1], 'title', 'Re(s)', 'grid')
+CreateSimplePlot(imag(Sg_base_center), 'subplot', [4 2 3], 'title', 'Im(s)', 'grid')
+CreateSimplePlot(real(h_base_center), 'subplot', [4 2 5], 'title', 'Re(h)', 'grid')
+CreateSimplePlot(imag(h_base_center), 'subplot', [4 2 7], 'title', 'Im(h)', 'grid')
+CreateSimplePlot(abs(S_base_center), 'subplot', [4 2 2], 'title', 'A(S)', 'grid')
+CreateSimplePlot(phi_S, 'subplot', [4 2 4], 'title', 'phi(S)', 'grid')
+CreateSimplePlot(abs(H_base_center), 'subplot', [4 2 6], 'title', 'A(H)', 'grid')
+CreateSimplePlot(phi_H, 'subplot', [4 2 8], 'title', 'phi(H)', 'grid')
 
 fprintf('Plots created!\n')
 
@@ -293,14 +313,14 @@ fprintf('\n- Creating plots\n')
 splash = GetRandomSplash();
 figure( 'Name', splash, 'NumberTitle', 'off' )
 
-CreateSimplePlot(real(SJTD), 'subplot', [4 2 1], 'title', 'Re(SJTD)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(imag(SJTD), 'subplot', [4 2 3], 'title', 'Im(SJTD)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(abs(SJTD), 'subplot', [4 2 5], 'title', 'A(SJTD)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(phi_SJTD, 'subplot', [4 2 7], 'title', 'phi(SJTD)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(real(MULT), 'subplot', [4 2 2], 'title', 'Re(MULT)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(imag(MULT), 'subplot', [4 2 4], 'title', 'Im(MULT)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(abs(MULT), 'subplot', [4 2 6], 'title', 'A(MULT)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(phi_MULT, 'subplot', [4 2 8], 'title', 'phi(MULT)', 'custom_x', 0:1:N-1, 'grid')
+CreateSimplePlot(real(SJTD), 'subplot', [4 2 1], 'title', 'Re(SJTD)', 'grid')
+CreateSimplePlot(imag(SJTD), 'subplot', [4 2 3], 'title', 'Im(SJTD)', 'grid')
+CreateSimplePlot(abs(SJTD), 'subplot', [4 2 5], 'title', 'A(SJTD)', 'grid')
+CreateSimplePlot(phi_SJTD, 'subplot', [4 2 7], 'title', 'phi(SJTD)', 'grid')
+CreateSimplePlot(real(MULT), 'subplot', [4 2 2], 'title', 'Re(MULT)', 'grid')
+CreateSimplePlot(imag(MULT), 'subplot', [4 2 4], 'title', 'Im(MULT)', 'grid')
+CreateSimplePlot(abs(MULT), 'subplot', [4 2 6], 'title', 'A(MULT)', 'grid')
+CreateSimplePlot(phi_MULT, 'subplot', [4 2 8], 'title', 'phi(MULT)', 'grid')
 
 fprintf('Plots created!\n')
 
@@ -327,14 +347,14 @@ fprintf('\n- Creating plots\n')
 splash = GetRandomSplash();
 figure( 'Name', splash, 'NumberTitle', 'off' )
 
-CreateSimplePlot(real(Sg_base_zero), 'subplot', [4 2 1], 'title', 'Re(s)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(imag(Sg_base_zero), 'subplot', [4 2 3], 'title', 'Im(s)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(real(h_base_zero), 'subplot', [4 2 5], 'title', 'Re(h)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(imag(h_base_zero), 'subplot', [4 2 7], 'title', 'Im(h)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(abs(S_base_zero), 'subplot', [4 2 2], 'title', 'A(S)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(phi_S, 'subplot', [4 2 4], 'title', 'phi(S)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(abs(H_base_zero), 'subplot', [4 2 6], 'title', 'A(H)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(phi_H, 'subplot', [4 2 8], 'title', 'phi(H)', 'custom_x', 0:1:N-1, 'grid')
+CreateSimplePlot(real(Sg_base_zero), 'subplot', [4 2 1], 'title', 'Re(s)', 'grid')
+CreateSimplePlot(imag(Sg_base_zero), 'subplot', [4 2 3], 'title', 'Im(s)', 'grid')
+CreateSimplePlot(real(h_base_zero), 'subplot', [4 2 5], 'title', 'Re(h)', 'grid')
+CreateSimplePlot(imag(h_base_zero), 'subplot', [4 2 7], 'title', 'Im(h)', 'grid')
+CreateSimplePlot(abs(S_base_zero), 'subplot', [4 2 2], 'title', 'A(S)', 'grid')
+CreateSimplePlot(phi_S, 'subplot', [4 2 4], 'title', 'phi(S)', 'grid')
+CreateSimplePlot(abs(H_base_zero), 'subplot', [4 2 6], 'title', 'A(H)', 'grid')
+CreateSimplePlot(phi_H, 'subplot', [4 2 8], 'title', 'phi(H)', 'grid')
 
 fprintf('Plots created!\n')
 
@@ -354,13 +374,13 @@ fprintf('\n- Creating plots\n')
 splash = GetRandomSplash();
 figure( 'Name', splash, 'NumberTitle', 'off' )
 
-CreateSimplePlot(real(SJTD), 'subplot', [4 2 1], 'title', 'Re(SJTD)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(imag(SJTD), 'subplot', [4 2 3], 'title', 'Im(SJTD)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(abs(SJTD), 'subplot', [4 2 5], 'title', 'A(SJTD)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(A_db_SJTD, 'subplot', [4 2 7], 'title', 'A(SJTD) dB', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(real(MULT), 'subplot', [4 2 2], 'title', 'Re(MULT)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(imag(MULT), 'subplot', [4 2 4], 'title', 'Im(MULT)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(abs(MULT), 'subplot', [4 2 6], 'title', 'A(MULT)', 'custom_x', 0:1:N-1, 'grid')
-CreateSimplePlot(phi_MULT, 'subplot', [4 2 8], 'title', 'phi(MULT)', 'custom_x', 0:1:N-1, 'grid')
+CreateSimplePlot(real(SJTD), 'subplot', [4 2 1], 'title', 'Re(SJTD)', 'grid')
+CreateSimplePlot(imag(SJTD), 'subplot', [4 2 3], 'title', 'Im(SJTD)', 'grid')
+CreateSimplePlot(abs(SJTD), 'subplot', [4 2 5], 'title', 'A(SJTD)', 'grid')
+CreateSimplePlot(A_db_SJTD, 'subplot', [4 2 7], 'title', 'A(SJTD) dB', 'grid')
+CreateSimplePlot(real(MULT), 'subplot', [4 2 2], 'title', 'Re(MULT)', 'grid')
+CreateSimplePlot(imag(MULT), 'subplot', [4 2 4], 'title', 'Im(MULT)', 'grid')
+CreateSimplePlot(abs(MULT), 'subplot', [4 2 6], 'title', 'A(MULT)', 'grid')
+CreateSimplePlot(phi_MULT, 'subplot', [4 2 8], 'title', 'phi(MULT)', 'grid')
 
 fprintf('Plots created!\n')
