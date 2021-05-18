@@ -90,7 +90,7 @@ fprintf('H = %g\n', H)
 
 [~, index2] = min(abs(A_s(center_position:(length(A_s) / 2))-h));
 
-index2 = index2 + center_position - 2;
+index2 = index2 + center_position;
 
 fprintf('\nFirst task\n')
 fprintf('x1 = %g\n', index)
