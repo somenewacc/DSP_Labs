@@ -24,9 +24,6 @@ function [hhg] = EvalsAndPlots(AFC, N, Nf, Title, varargin)
     end
 
     h = ifft(AFC);
-    if(ismember('diff',varargin))
-        h = -h;
-    end
 
     hh = [ h( N - floor( Nf/2 ) + 1 : N), h( 1: ceil( Nf / 2 ) )];
 
@@ -44,19 +41,13 @@ function [hhg] = EvalsAndPlots(AFC, N, Nf, Title, varargin)
     AFChh = abs(x);
     x = fft([hhg, zeros_from_end]);
     AFChhg = abs(x);
-    phi = unwrap(angle(x+1e-10));
+    phi = unwrap(angle(x+((1e-12)+(1e-12)*(1i))));
     
     figure( 'Name', Title, 'NumberTitle', 'off' )
     
-    if(ismember('diff',varargin))
-        h_y   = imag(h);
-        hh_y  = imag(hh);
-        hhg_y = imag(hhg);
-    else
-        h_y   = real(h);
-        hh_y  = real(hh);
-        hhg_y = real(hhg);
-    end
+    h_y   = real(h);
+    hh_y  = real(hh);
+    hhg_y = real(hhg);
 
     CreateSimplePlot(h_y,   'subplot', [4 2 1], 'grid', 'title', 'h',   'xlabel', 'Time, T', 'ylabel', '1')
     xlim([0 length(h)-1])
@@ -65,7 +56,12 @@ function [hhg] = EvalsAndPlots(AFC, N, Nf, Title, varargin)
     CreateSimplePlot(hhg_y, 'subplot', [4 2 5], 'grid', 'title', 'hhg', 'xlabel', 'Time, T', 'ylabel', '1')
     xlim([0 length(hh)-1])
 
-    CreateSimplePlot(AFC, 'subplot', [4 2 2], 'grid', 'title', 'chh, Re b, Im r', 'xlabel', 'Frequency, fs/N', 'ylabel', '1*T')
+    if(ismember('diff',varargin))
+        complex_var = 'complex';
+    else
+        complex_var = '';
+    end
+    CreateSimplePlot(AFC, 'subplot', [4 2 2], 'grid', 'title', 'chh, Re b, Im r', 'xlabel', 'Frequency, fs/N', 'ylabel', '1*T', complex_var)
     xlim([0 length(AFC)-1])
     if(ismember('hw',varargin))
         CreateSimplePlot(AFChh, 'subplot', [4 2 4], 'grid', 'title', 'achh(hh)', 'xlabel', 'Frequency, fs/N', 'ylabel', '1*T')

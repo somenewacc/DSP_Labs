@@ -106,7 +106,7 @@ end
 
 % Nc = round(N*fc/fs);
 
-a = linspace(0,1,N/2);
+a = linspace(0,1i,N/2);
 a(end) = [];
 not_a = fliplr(-a);
 not_a(end) = [];
@@ -125,9 +125,9 @@ if rem(Nf, 2) == 0
     Nf = Nf + 1;
 end
 
-Nc = round(N*fc/fs);
+% Nc = round(N*fc/fs);
 
-AFC = [0, ones(1, Nn-2), 0, 0, 0, -ones(1, Nn-2)];
+AFC = [0, complex(0, ones(1, Nn-2)), 0, 0, 0, complex(0, -ones(1, Nn-2))];
 
 EvalsAndPlots( AFC, N, Nf, '1 - Hilbert', 'diff');
 
@@ -135,7 +135,7 @@ DisplayHeader('Task 2. Check the homework')
 fs = 720;
 fn=fs/2;
 N = 8;
-Nn = N/2;
+% Nn = N/2;
 Nf=7;
 
 % LOWPASS
@@ -163,7 +163,7 @@ EvalsAndPlots( AFC, N, Nf, '2 - HIGHPASS', 'hw');
 % BANDPASS
 f0 = 150;
 fc = 100;
-fz = 170;
+% fz = 170;
 
 N0 = round(N*f0/fs);
 Nc = round(N*fc/fs);
@@ -191,7 +191,7 @@ fc = 288;
 
 Nc = round(N*fc/fs);
 
-a = linspace(0,1,Nc+2);
+a = linspace(0,1i,Nc+2);
 a(end) = [];
 minus_a = fliplr(-a);
 minus_a(end) = [];
@@ -204,7 +204,7 @@ fc = 72;
 
 Nc = ceil(N*fc/fs);
 
-AFC = [zeros(1, Nc), ones(1, Nc*3), 0, -ones(1, Nc*3)];
+AFC = [zeros(1, Nc), complex(0, ones(1, Nc*3)), 0, complex(0, -ones(1, Nc*3))];
 
 EvalsAndPlots( AFC, N, Nf, '2 - Hilbert', 'diff', 'hw');
 

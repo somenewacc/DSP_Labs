@@ -61,7 +61,11 @@ function [] = CreateSimplePlot( y, varargin )
         hold on
         plot( x, y, '.r-' )
     else
-        plot( x, y )
+        if ismember( 'complex', varargin_str )
+            plot( x, real(y), x, imag(y), 'r' )
+        else
+            plot( x, y )
+        end
     end
 
     %% Add title to plot %%
