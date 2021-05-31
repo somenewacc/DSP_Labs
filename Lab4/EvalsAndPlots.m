@@ -1,15 +1,18 @@
 function [hhg] = EvalsAndPlots(AFC, N, Nf, Title, varargin)
 
     if(ismember('ss',varargin))
-        SS = AFC;
-        ss = N;
-        ssbp1 = Nf;
+        ss = AFC;
+        SS = fft(ss);
+        ssbp1 = N;
+        ssbp2 = Nf;
         
         SSbp1 = fft(ssbp1);
         figure( 'Name', Title, 'NumberTitle', 'off' )
         CreateSimplePlot(ss,         'subplot', [4 2 1], 'grid', 'title', 'ss',   'xlabel', 'Time, T', 'ylabel', 'v')
         xlim([0 length(ss)-1])
-        CreateSimplePlot(real(ssbp1), 'subplot', [4 2 5], 'grid', 'title', 'ss(fnch)', 'xlabel', 'Time, T', 'ylabel', 'v')
+        CreateSimplePlot(real(ssbp1), 'subplot', [4 2 3], 'grid', 'title', 'ss1(fnch)', 'xlabel', 'Time, T', 'ylabel', 'v')
+        xlim([0 length(ss) - 1])
+        CreateSimplePlot(real(ssbp2), 'subplot', [4 2 5], 'grid', 'title', 'ss2(fnch)', 'xlabel', 'Time, T', 'ylabel', 'v')
         xlim([0 length(ss) - 1])
 
         CreateSimplePlot(abs(SS), 'subplot', [4 2 2], 'grid', 'title', 'abs(SS)', 'xlabel', 'Frequency, fs', 'ylabel', 'v*T')
@@ -41,7 +44,7 @@ function [hhg] = EvalsAndPlots(AFC, N, Nf, Title, varargin)
     AFChh = abs(x);
     x = fft([hhg, zeros_from_end]);
     AFChhg = abs(x);
-    phi = unwrap(angle(x+((1e-12)+(1e-12)*(1i))));
+    phi = unwrap(angle(x+complex(1e-10,1e-10)));
     
     figure( 'Name', Title, 'NumberTitle', 'off' )
     

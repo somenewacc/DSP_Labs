@@ -255,7 +255,8 @@ for i=1:1:N
     ssbp1(i) = sum(premx);
 end
 
-EvalsAndPlots( SS, ss, ssbp1, '3 - ss from s1', 'ss');
+ssbp2 = ifft(SS.*fft([bp1 zeros(1,N-length(bp1))]));
+EvalsAndPlots( ss, ssbp1, ssbp2, '3 - ss from s1', 'ss');
 
 % Bandpass2
 f0 = 250;
@@ -279,4 +280,6 @@ for i=1:1:N
     premx = bp1.*s;
     ssbp1(i) = sum(premx);
 end
-EvalsAndPlots( SS, ss, ssbp1, '3 - ss from s2', 'ss');
+
+ssbp2 = ifft(SS.*fft([bp1 zeros(1,N-length(bp1))]));
+EvalsAndPlots( ss, ssbp1, ssbp2, '3 - ss from s2', 'ss');
